@@ -11,3 +11,9 @@ pip freeze > requirements.txt
 
 pip install -r requirements.txt
 ```
+
+Запуск программы
+
+```python
+uvicorn main:app --reload
+```
