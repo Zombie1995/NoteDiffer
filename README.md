@@ -15,5 +15,5 @@ pip install -r requirements.txt
 Запуск программы
 
 ```python
-uvicorn main:app --reload
+python main.py
 ```
