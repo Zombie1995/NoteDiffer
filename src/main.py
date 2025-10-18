@@ -6,8 +6,6 @@ from pydantic import BaseModel
 from pathlib import Path
 import difflib
 
-print(NOTES_DIR)
-
 
 def init_notes_folder(path):
     os.makedirs(path, exist_ok=True)
