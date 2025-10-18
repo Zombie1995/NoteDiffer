@@ -1,7 +1,4 @@
-from fastapi import FastAPI
+from src.main import run
 
-app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello, FastAPI!"}
+if __name__ == "__main__":
+    run()
