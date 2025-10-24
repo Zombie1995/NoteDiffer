@@ -1,9 +1,6 @@
 import os
 import uvicorn
 from src.constants import NOTES_DIR
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-import difflib
 
 
 class App:
