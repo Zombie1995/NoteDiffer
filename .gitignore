@@ -10,3 +10,4 @@ notes/
 data/
 .git/
 .env
+.vscode/
