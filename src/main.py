@@ -1,6 +1,6 @@
 import os
 import uvicorn
-from src.constants import NOTES_DIR
+from src.constants import DATA_DIR
 
 
 class App:
@@ -12,7 +12,7 @@ class App:
                     port=8000, reload=True)
 
     def _init_notes_folder(self):
-        os.makedirs(NOTES_DIR, exist_ok=True)
+        os.makedirs(DATA_DIR, exist_ok=True)
 
 
 app = App()
