@@ -99,3 +99,142 @@ class NoteDataService:
             "title": title,
             "version": next_version,
         }
+
+    def get_latest_note(self, title: str) -> dict:
+        """Get the latest version of a note.
+
+        Args:
+            title: Title of the note
+
+        Returns:
+            dict with title, version number, and content
+
+        Raises:
+            ValueError: If note with given title doesn't exist
+        """
+        note_dir = os.path.join(NOTES_DIR, title)
+
+        if not os.path.exists(note_dir):
+            raise ValueError(f"Note with title '{title}' not found")
+
+        # Find all version files
+        version_files = glob.glob(os.path.join(note_dir, "v*.txt"))
+
+        if not version_files:
+            raise ValueError(f"No version file found for title '{title}'")
+
+        # Extract version numbers and find the maximum
+        versions = []
+        for file_path in version_files:
+            filename = os.path.basename(file_path)
+            match = re.match(r'v(\d+)\.txt', filename)
+            if match:
+                versions.append((int(match.group(1)), file_path))
+
+        if not versions:
+            raise ValueError(
+                f"No valid version files found for title '{title}'")
+
+        # Get the latest version
+        latest_version, latest_file = max(versions, key=lambda x: x[0])
+
+        # Read content
+        with open(latest_file, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        return {
+            "title": title,
+            "version": latest_version,
+            "content": content,
+        }
+
+    def list_versions(self, title: str) -> dict:
+        """List all versions of a note.
+
+        Args:
+            title: Title of the note
+
+        Returns:
+            dict with title and list of version numbers
+
+        Raises:
+            ValueError: If note with given title doesn't exist
+        """
+        note_dir = os.path.join(NOTES_DIR, title)
+
+        if not os.path.exists(note_dir):
+            raise ValueError(f"Note with title '{title}' not found")
+
+        # Find all version files
+        version_files = glob.glob(os.path.join(note_dir, "v*.txt"))
+
+        if not version_files:
+            raise ValueError(f"No version file found for title '{title}'")
+
+        # Extract version numbers
+        versions = []
+        for file_path in version_files:
+            filename = os.path.basename(file_path)
+            match = re.match(r'v(\d+)\.txt', filename)
+            if match:
+                versions.append(int(match.group(1)))
+
+        versions.sort()
+
+        return {
+            "title": title,
+            "versions": versions,
+        }
+
+    def get_diff(self, title: str, ver1: int, ver2: int) -> dict:
+        """Get the difference between two versions of a note.
+
+        Args:
+            title: Title of the note
+            ver1: First version number
+            ver2: Second version number
+
+        Returns:
+            dict with title, version numbers, and line-by-line diff
+
+        Raises:
+            ValueError: If note or versions don't exist
+        """
+        note_dir = os.path.join(NOTES_DIR, title)
+
+        if not os.path.exists(note_dir):
+            raise ValueError(f"Note with title '{title}' not found")
+
+        # Check if both version files exist
+        ver1_file = os.path.join(note_dir, f"v{ver1}.txt")
+        ver2_file = os.path.join(note_dir, f"v{ver2}.txt")
+
+        if not os.path.exists(ver1_file):
+            raise ValueError(f"Version {ver1} not found for note '{title}'")
+
+        if not os.path.exists(ver2_file):
+            raise ValueError(f"Version {ver2} not found for note '{title}'")
+
+        # Read both versions
+        with open(ver1_file, "r", encoding="utf-8") as f:
+            content1 = f.read().splitlines()
+
+        with open(ver2_file, "r", encoding="utf-8") as f:
+            content2 = f.read().splitlines()
+
+        # Simple line-by-line diff
+        import difflib
+        diff = list(difflib.unified_diff(
+            content1,
+            content2,
+            fromfile=f"v{ver1}",
+            tofile=f"v{ver2}",
+            lineterm=""
+        ))
+
+        return {
+            "title": title,
+            "version1": ver1,
+            "version2": ver2,
+            "diff": diff,
+        }

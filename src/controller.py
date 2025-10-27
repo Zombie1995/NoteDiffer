@@ -29,16 +29,37 @@ def update_note(title: str, data: NoteUpdate):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@fastapi_app.get("/notes/{note_id}")
-def get_latest_note(note_id: str):
-    return {}
+@fastapi_app.get("/notes/{title}")
+def get_latest_note(title: str):
+    """Get the latest version of a note."""
+    try:
+        result = note_service.get_latest_note(title)
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
-@fastapi_app.get("/notes/{note_id}/versions")
-def list_versions(note_id: str):
-    return {}
+@fastapi_app.get("/notes/{title}/versions")
+def list_versions(title: str):
+    """List all versions of a note."""
+    try:
+        result = note_service.list_versions(title)
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @fastapi_app.get("/notes/{note_id}/diff/{ver1}/{ver2}")
 def get_diff(note_id: str, ver1: int, ver2: int):
-    return {}
+    """Get the difference between two versions of a note."""
+    try:
+        result = note_service.get_diff(note_id, ver1, ver2)
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
