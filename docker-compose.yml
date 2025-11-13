@@ -15,7 +15,7 @@ services:
       - app-network
 
   app:
-    restart: always
+    restart: on-failure
     build: .
     container_name: notesdiffer-app
     ports:
