@@ -8,8 +8,6 @@ Python 3.12.0
 
 Создается db-шка postgres, указываются креды в .env (приведен .env.example), запускаете make up.
 
-Важно!!! Обращается к внешней db-шке postgres.
-
 ## Запуск через Docker
 
 ```bash
