@@ -6,4 +6,5 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-    network_mode: host
+    extra_hosts:
+     - "host.docker.internal:host-gateway"
