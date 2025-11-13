@@ -18,7 +18,7 @@ make up
 docker-compose up --build
 ```
 
-API доступен по адресу: http://localhost:8000/docs
+API доступен по адресу: http://localhost:8023/docs
 
 ## Локальная разработка
 

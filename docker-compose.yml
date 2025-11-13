@@ -23,7 +23,7 @@ services:
     build: .
     container_name: notesdiffer-app
     ports:
-      - "8000:8000"
+      - "8023:8023"
     volumes:
       - .:/app
     env_file:
