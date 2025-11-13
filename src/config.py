@@ -18,7 +18,7 @@ class Settings:
 
     # Application settings
     APP_HOST: str = os.getenv("APP_HOST", "0.0.0.0")
-    APP_PORT: int = int(os.getenv("APP_PORT", "8023"))
+    APP_PORT: int = int(os.getenv("APP_PORT", "8000"))
 
 
 @lru_cache()
