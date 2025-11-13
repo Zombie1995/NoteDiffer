@@ -8,3 +8,5 @@ services:
       - .:/app
     extra_hosts:
      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
