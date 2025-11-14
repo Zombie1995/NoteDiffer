@@ -12,6 +12,7 @@ class App:
             "src.main:fastapi_app",
             host=settings.APP_HOST,
             port=settings.APP_PORT,
+            log_level="debug",
             reload=True
         )
 
