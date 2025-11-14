@@ -7,18 +7,6 @@ fastapi_app = FastAPI(title="Versioned Notes API")
 note_service = NoteDataService.instance()
 
 
-@fastapi_app.get("/")
-def root():
-    """Root endpoint."""
-    return {"message": "Versioned Notes API is running", "docs": "/docs"}
-
-
-@fastapi_app.get("/health")
-def health():
-    """Health check endpoint."""
-    return {"status": "healthy"}
-
-
 @fastapi_app.post("/notes/create")
 def create_note(data: NoteCreate):
     """Create a new note."""
